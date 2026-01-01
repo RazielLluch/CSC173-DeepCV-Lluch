@@ -1,0 +1,8 @@
+path: C:\Users\Admin\Desktop\School\CSC173\final project\CSC173-DeepCV-Lluch\yolo_dataset
+train: train
+val: val
+test: test
+names:
+- ' backwardbadposture'
+- ' forwardbadposture'
+- ' goodposture'
