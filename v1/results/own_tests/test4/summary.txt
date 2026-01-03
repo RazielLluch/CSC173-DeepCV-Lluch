@@ -1,0 +1,16 @@
+GAMER ERGOVISION - BATCH PREDICTION SUMMARY
+======================================================================
+
+Total images processed: 188
+
+Posture Distribution:
+----------------------------------------------------------------------
+  Reclined/Backward            50 ( 26.6%)
+  Forward Lean                 46 ( 24.5%)
+  Neutral/Good                 92 ( 48.9%)
+
+Risk Level Distribution:
+----------------------------------------------------------------------
+  Low                          92 ( 48.9%)
+  Medium                       50 ( 26.6%)
+  High                         46 ( 24.5%)
