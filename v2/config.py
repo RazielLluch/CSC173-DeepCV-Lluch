@@ -92,7 +92,7 @@ LR_SCHEDULER_MIN_LR = 1e-6
 EARLY_STOPPING_PATIENCE = 10
 
 # Data Loading
-NUM_WORKERS = 0  # Set to 0 for Windows compatibility
+NUM_WORKERS = 10  # Set to 0 for Windows compatibility
 PIN_MEMORY = True
 
 # ============================================================================

@@ -68,7 +68,7 @@ CLASSIFIER_CONFIG = {
     "img_size": 224,           # Input size for classifier
     "learning_rate": 0.001,
     "weight_decay": 1e-4,
-    "num_workers": 2,          # Dataloader workers (reduce to 2 if on Windows and having issues)
+    "num_workers": 10,          # Dataloader workers (reduce to 2 if on Windows and having issues)
     "device": "cuda",          # "cuda" or "cpu"
 }
 
@@ -76,11 +76,11 @@ CLASSIFIER_CONFIG = {
 YOLO_CONFIG = {
     "model_size": "yolov8s",
     "epochs": 50,
-    "batch_size": 32,
+    "batch_size": 128,
     "img_size": 640,
     "learning_rate": 0.01,
     "patience": 10,
-    "workers": 2,
+    "workers": 10,
     "device": "0",
 }
 
