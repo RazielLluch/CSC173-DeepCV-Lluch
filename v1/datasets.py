@@ -69,8 +69,13 @@ class PostureDataset(Dataset):
         """Load image paths and labels from directory structure."""
         split_path = self.data_path / self.split
         
+        print(split_path)
+
         if not split_path.exists():
             raise ValueError(f"Split path does not exist: {split_path}")
+        
+        # Use a set to track already-added files and prevent duplicates
+        added_files = set()
         
         # Iterate through class folders
         for class_dir in split_path.iterdir():
@@ -84,10 +89,18 @@ class PostureDataset(Dataset):
                 print(f"Warning: Unknown class folder '{class_dir.name}', skipping...")
                 continue
             
-            # Load all images from this class
-            for ext in ['*.jpg', '*.jpeg', '*.png', '*.JPG', '*.JPEG', '*.PNG']:
-                for img_path in class_dir.glob(ext):
-                    self.samples.append((img_path, class_name))
+            # Load all images from this class (case-insensitive search)
+            # Use a set to avoid duplicates within this class directory
+            for img_path in class_dir.iterdir():
+                if img_path.is_file():
+                    # Check if it's an image file
+                    if img_path.suffix.lower() in ['.jpg', '.jpeg', '.png']:
+                        # Use absolute path as unique identifier
+                        file_key = str(img_path.resolve())
+                        
+                        if file_key not in added_files:
+                            self.samples.append((img_path, class_name))
+                            added_files.add(file_key)
     
     def _print_class_distribution(self):
         """Print distribution of classes in this split."""
@@ -99,6 +112,11 @@ class PostureDataset(Dataset):
             count = class_counts.get(class_name, 0)
             percentage = (count / len(self.samples) * 100) if self.samples else 0
             print(f"  {class_name}: {count} ({percentage:.1f}%)")
+    
+    @property
+    def image_paths(self):
+        """Return list of image paths for debugging."""
+        return [str(img_path) for img_path, _ in self.samples]
     
     def __len__(self) -> int:
         return len(self.samples)

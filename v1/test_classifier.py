@@ -45,18 +45,31 @@ def test_model(model, dataloader, device):
 
 
 def plot_confusion_matrix(y_true, y_pred, class_names, save_path: Path):
-    """Plot and save confusion matrix."""
+    """Plot and save both raw and normalized confusion matrices."""
     cm = confusion_matrix(y_true, y_pred)
+    cm_normalized = confusion_matrix(y_true, y_pred, normalize='true')
     
     display_labels = [POSTURE_DISPLAY_NAMES.get(cls, cls) for cls in class_names]
     
-    plt.figure(figsize=(10, 8))
+    # Create figure with two subplots side by side
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
+    
+    # Raw counts confusion matrix
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
                 xticklabels=display_labels, yticklabels=display_labels,
-                cbar_kws={'label': 'Count'})
-    plt.xlabel('Predicted', fontsize=12)
-    plt.ylabel('True', fontsize=12)
-    plt.title('Confusion Matrix - Test Set', fontsize=14)
+                cbar_kws={'label': 'Count'}, ax=ax1)
+    ax1.set_xlabel('Predicted', fontsize=12)
+    ax1.set_ylabel('True', fontsize=12)
+    ax1.set_title('Confusion Matrix - Raw Counts', fontsize=14)
+    
+    # Normalized confusion matrix (percentages)
+    sns.heatmap(cm_normalized, annot=True, fmt='.2%', cmap='Blues',
+                xticklabels=display_labels, yticklabels=display_labels,
+                cbar_kws={'label': 'Percentage'}, ax=ax2, vmin=0, vmax=1)
+    ax2.set_xlabel('Predicted', fontsize=12)
+    ax2.set_ylabel('True', fontsize=12)
+    ax2.set_title('Confusion Matrix - Normalized (by True Class)', fontsize=14)
+    
     plt.tight_layout()
     plt.savefig(save_path, dpi=150)
     print(f"✓ Confusion matrix saved to {save_path}")
@@ -193,6 +206,16 @@ def main():
     test_transform = get_posture_transforms("test")
     test_dataset = PostureDataset(YOLO_DATASET_PATH, split="test", transform=test_transform)
     
+    # Check for duplicate entries in dataset
+    print(f"Dataset length: {len(test_dataset)}")
+    if hasattr(test_dataset, 'image_paths'):
+        unique_paths = set(test_dataset.image_paths)
+        print(f"Unique image paths: {len(unique_paths)}")
+        if len(unique_paths) != len(test_dataset):
+            print(f"⚠️  WARNING: Dataset appears to have {len(test_dataset) - len(unique_paths)} duplicate entries!")
+            print(f"   The dataset is likely loading each sample twice.")
+            print(f"   Actual unique samples: {len(unique_paths)}")
+    
     test_loader = DataLoader(
         test_dataset,
         batch_size=CLASSIFIER_CONFIG["batch_size"],
@@ -225,9 +248,13 @@ def main():
     
     predictions, labels, confidences = test_model(model, test_loader, device)
     
+    # Check for duplicates in actual test results
+    unique_predictions = len(predictions)
+    print(f"\nTotal predictions made: {unique_predictions}")
+    
     # Calculate metrics
     test_acc = accuracy_score(labels, predictions) * 100
-    print(f"\nTest Accuracy: {test_acc:.2f}%\n")
+    print(f"Test Accuracy: {test_acc:.2f}%\n")
     
     # Display names for reports
     display_labels = [POSTURE_DISPLAY_NAMES.get(cls, cls) for cls in POSTURE_CLASSES]

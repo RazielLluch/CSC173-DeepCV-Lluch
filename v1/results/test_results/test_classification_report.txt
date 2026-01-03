@@ -1,22 +1,22 @@
 GAMER ERGOVISION - TEST SET CLASSIFICATION REPORT
 ======================================================================
 
-Test Accuracy: 94.68%
-Total Test Samples: 188
+Test Accuracy: 93.62%
+Total Test Samples: 94
 
 Classification Report:
                    precision    recall  f1-score   support
 
-Reclined/Backward       1.00      0.86      0.93        58
-     Forward Lean       0.96      1.00      0.98        44
-     Neutral/Good       0.91      0.98      0.94        86
+Reclined/Backward       0.96      1.00      0.98        24
+     Forward Lean       1.00      0.79      0.88        29
+     Neutral/Good       0.89      1.00      0.94        41
 
-         accuracy                           0.95       188
-        macro avg       0.96      0.95      0.95       188
-     weighted avg       0.95      0.95      0.95       188
+         accuracy                           0.94        94
+        macro avg       0.95      0.93      0.94        94
+     weighted avg       0.94      0.94      0.93        94
 
 ======================================================================
 Per-Class Sample Counts:
-  Reclined/Backward: 58
-  Forward Lean: 44
-  Neutral/Good: 86
+  Reclined/Backward: 24
+  Forward Lean: 29
+  Neutral/Good: 41

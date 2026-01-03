@@ -17,7 +17,7 @@ from sklearn.metrics import (
     precision_recall_fscore_support
 )
 
-from config import (
+from ..config import (
     POSTURE_CLASSES,
     BATCH_SIZE,
     NUM_WORKERS,

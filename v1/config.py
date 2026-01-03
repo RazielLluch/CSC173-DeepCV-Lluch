@@ -15,8 +15,8 @@ PROJECT_ROOT = Path(r"C:\Users\Admin\Desktop\School\CSC173\final project\CSC173-
 YOLO_DATASET_PATH = PROJECT_ROOT / "yolo_dataset"
 
 # Model save paths
-MODELS_ROOT = PROJECT_ROOT / "models"
-RESULTS_ROOT = PROJECT_ROOT / "results"
+MODELS_ROOT = PROJECT_ROOT / "v1" / "models"
+RESULTS_ROOT = PROJECT_ROOT / "v1" / "results"
 POSTURE_CLASSIFIER_PATH = MODELS_ROOT / "posture_classifier.pth"
 
 # For detection (if you add detection later)
