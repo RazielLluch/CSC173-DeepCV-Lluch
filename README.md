@@ -203,7 +203,7 @@ Key Finding: Pose features provide the largest single improvement (+2.3%), valid
 
 ### Demo
 ![Detection Demo](demo/detection.gif)
-[Video: [CSC173_YourLastName_Final.mp4](demo/CSC173_YourLastName_Final.mp4)]
+[Video: [CSC173_Lluch_Final](https://drive.google.com/file/d/1HNzyT0xz5Ik051ymdNIKkmRAY4l7Rg0_/view?usp=sharing)]
 
 ## Discussion
 
